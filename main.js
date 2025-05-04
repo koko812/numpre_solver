@@ -1,6 +1,9 @@
-const width = 10
-const height = 10
+const width = 9
+const height = 9
 const size = 30
+
+const board = []
+let focus = null
 
 const init = () => {
     const container = document.createElement('div')
@@ -14,7 +17,9 @@ const init = () => {
     // いや普通にパネパネを追加してるだけだった
     document.body.appendChild(container)
 
+    // 今考えると，ナンプレは 9x9 だった, アホが発動していた
     for (let y = 0; y < height; y++) {
+        board[y] = []
         for (let x = 0; x < width; x++) {
             // 普通に考えて，パネルで実装しないと，各マスごとのフォーカスとか作るのが，
             // container に grid をつけるだけだとめんどくさいかもな
@@ -37,10 +42,18 @@ const init = () => {
             // そこの修正は必要
             // というか，下から選んできた数字を反映させるの，普通に難しくないか？
             // まあ，パットは浮かんでこないということは確か
+
+            // t-kihira を確認してきたが，流石に実装がスマートすぎて驚いた
+            board[y][x] = { num: 0, pain }
             pain.onpointerdown = (e) => {
                 e.preventDefault()
-                pain.style.backgroundColor = '#ff0'
-                console.log('pushed');
+                if (focus) {
+                    [px, py] = focus
+                    board[py][px].pain.style.backgroundColor = '#fff'
+                }
+                focus = [x, y]
+                board[y][x].pain.style.backgroundColor = '#ff0'
+                console.log(focus);
             }
             container.appendChild(pain)
         }
@@ -66,7 +79,7 @@ const init = () => {
         pain.style.justifyContent = 'center'
         pain.style.alignItems = 'center'
         // なんか若干 text の位置がずれてるのが気になるかもしれない？
-        pain.textContent = x < 10 ? `${x}` : ''
+        pain.textContent = x < 9 ? `${x + 1}` : ''
         pain.onpointerdown = (e) => {
             e.preventDefault()
             pain.style.backgroundColor = '#ff0'
