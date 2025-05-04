@@ -31,10 +31,12 @@ const init = () => {
             pain.style.justifyContent = 'center'
             pain.style.alignItems = 'center'
             // なんか若干 text の位置がずれてるのが気になるかもしれない？
-            pain.textContent = `${x + y}`
+            pain.textContent = ``
             // これは，リスト的なものを作る必要があるんだろうか
             // 大丈夫だったんだけど，複数選択が可能になってしまってるので，
             // そこの修正は必要
+            // というか，下から選んできた数字を反映させるの，普通に難しくないか？
+            // まあ，パットは浮かんでこないということは確か
             pain.onpointerdown = (e) => {
                 e.preventDefault()
                 pain.style.backgroundColor = '#ff0'
@@ -64,7 +66,12 @@ const init = () => {
         pain.style.justifyContent = 'center'
         pain.style.alignItems = 'center'
         // なんか若干 text の位置がずれてるのが気になるかもしれない？
-        pain.textContent = x<10 ? `${x}`: '' 
+        pain.textContent = x < 10 ? `${x}` : ''
+        pain.onpointerdown = (e) => {
+            e.preventDefault()
+            pain.style.backgroundColor = '#ff0'
+            console.log('pushed');
+        }
         container.appendChild(pain)
     }
 }
