@@ -36,7 +36,6 @@ const init = () => {
             pain.style.justifyContent = 'center'
             pain.style.alignItems = 'center'
             // なんか若干 text の位置がずれてるのが気になるかもしれない？
-            pain.textContent = ``
             // これは，リスト的なものを作る必要があるんだろうか
             // 大丈夫だったんだけど，複数選択が可能になってしまってるので，
             // そこの修正は必要
@@ -45,6 +44,7 @@ const init = () => {
 
             // t-kihira を確認してきたが，流石に実装がスマートすぎて驚いた
             board[y][x] = { num: 0, pain }
+            pain.textContent = `${board[y][x].num ? board[y][x].num:''}`
             pain.onpointerdown = (e) => {
                 e.preventDefault()
                 if (focus) {
@@ -82,8 +82,11 @@ const init = () => {
         pain.textContent = x < 9 ? `${x + 1}` : ''
         pain.onpointerdown = (e) => {
             e.preventDefault()
-            pain.style.backgroundColor = '#ff0'
-            console.log('pushed');
+            const [tx, ty] = focus
+            // なんかこの辺り，重複してる処理を書いてる感じがして気持ち悪い
+            board[ty][tx].num = x
+            board[ty][tx].pain.textContent = `${x+1}`
+            console.log(x);
         }
         container.appendChild(pain)
     }
