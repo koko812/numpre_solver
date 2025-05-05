@@ -78,6 +78,7 @@ const init = () => {
         pain.style.display = 'flex'
         pain.style.justifyContent = 'center'
         pain.style.alignItems = 'center'
+        
         // なんか若干 text の位置がずれてるのが気になるかもしれない？
         pain.textContent = x < 9 ? `${x + 1}` : ''
         pain.onpointerdown = (e) => {
